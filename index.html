@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Harry Potter Hangman</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="assets/css/business-casual.css" rel="stylesheet">
+
+    <!-- Fonts -->
+   <link href="assets/fonts/LUMOS.TTF" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Josefin+Slab:100,300,400,600,700,100italic,300italic,400italic,600italic,700italic" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body>
+    <!--title-->
+	<div class="title brand">
+        Harry Potter Hangman
+    </div>
+    <!--Display the following on the page:
+            Press any key to get started!
+            Wins: # of times user guessed the word correctly
+            If the word is madonna then display it initially like this: -->
+    <div class="row">
+        <div class="col-sm-offset-3 col-sm-3 col-xs-3 stitched" >
+            <img src="assets/images/diagonalley.jpg">
+           <!--Origionally going to make a new row, 
+           but liked it in the same box-->
+            <h3 class="title">Letters already guessed</h3>
+            <p id="letterGuessed" class="lumos"></p>
+        </div>
+        <div class="col-sm-3 col-xs-3 stitched" >
+            <h1 class="magic1">Press any key to get started!</h1>
+            <h3 id="wins" class="lumos">Wins:</h3>
+            <h3 class="lumos">Current Word </h3>
+            <h3 id="currentWord" class="lumos"></h3>
+            <h3 class="title" style="color:gold">Number of Guesses Remaining</h3>
+            <h3 id="guesRemain" class="title" style="color:red">13</h3>
+        </div>
+  
+    </div><!--end row-->
+    
+<!-- jQuery -->
+    <script src="assets/javascript/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="assets/javascript/game.js"></script>
+    <script src="assets/javascript/bootstrap.min.js"></script>
+    <script src="assets/javascript/bootstrap.min.js"></script>
+</body>
+</html>

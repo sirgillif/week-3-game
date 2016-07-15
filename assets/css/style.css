@@ -1,0 +1,43 @@
+@font-face {
+   font-family: harryp;
+   src: url(../fonts/HARRYP.TTF);
+}
+@font-face {
+    font-family: magicOne;
+    src: url(../fonts/MagicSchoolOne.ttf);
+}
+@font-face {
+    font-family: magicTwo;
+    src: url(../fonts/MagicSchoolTwo.ttf);
+}
+@font-face {
+    font-family: lumos;
+    src: url(../fonts/LUMOS.TTF);
+}
+div img{
+	padding: 30px 0px;
+	
+}
+#letterGuessed{
+	font-size: 25px;
+	color: white;
+
+}
+.title{
+   font-family: harryp;
+}
+.lumos{
+	font-family: lumos;
+}
+.magic1{
+	font-family: magicOne;
+}
+.magic2{
+	font-family:magicTwo;
+}
+.stitched {
+
+   border: 2px dashed #fff;
+   color:white;
+	text-align: center;
+}
