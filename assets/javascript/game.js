@@ -8,7 +8,7 @@
 var wordList=["Harry","Hermione","Ron","Tonks","Dobby","Ginny","Lockhart","Moody","McGonagall","Umbridge","Malfoy","Lupin","Hagrid","Luna","Bellatrix","Sirius","Voldemort","Neville","Dumbledore","Snape","Accio","Alohomora","Azkaban","Butterbeer","Dementor","Expelliarmus","Gillyweed","Gringotts","Gryffindor","Hogsmeade","Hogwarts","Honeydukes","Howler","Hufflepuff","Incendio","Lumos","Mudblood","Muggle","Ollivanders","Parseltongue","Poltergeist","Portkey","Ravenclaw","Quidditch","Riddikulus","Slytherin","Transfiguration","Stupefy","Wolfsbane"]
 var guesser={
 	alpha:[],
-	word:"",
+	word:[],
 	wins:0,
 	/*	origionally wanted to do things this way decided to add letters dynamically rather then checking them off
 		initAlpha: function(){
@@ -18,9 +18,15 @@ var guesser={
 			}
 	},*/
 	initWord:function(){
+		//var tmpWord=""
+		this.word=[]
 		for (var i = 0; i < comp.word.length; i++) {
 			this.word[i]="_";
 		}
+		this.alpha=[];
+		//tmpWord=this.word.join(" ");
+		//console.log("guesser word length "+ this.word.length+"the word"+tmpWord);
+		//document.getElementById("currentWord").innerHTML = tmpWord;
 	},
 }
 var comp={
@@ -29,25 +35,26 @@ var comp={
 	word:"",
 	gameWordList:[],
 	initGameAll: function () {
-		gameWordList=wordList;
-		var i=Math.floor(Math.floor(Math.random() * gameWordList.length));
-		this.word=gameWordList[i];
-		gameWordList.splice(i, 1);
+		this.gameWordList=wordList;
+		var i=Math.floor(Math.floor(Math.random() * this.gameWordList.length));
+		this.word=this.gameWordList[i];
+		this.gameWordList.splice(i, 1);
 		this.guesses=13;
 		//guesser.initAlpha();
 		guesser.initWord();
-		document.getElementById("currentWord").innerHTML = guesser.word;
+		document.getElementById("currentWord").innerHTML = guesser.word.join(" ");
 		document.getElementById("guesRemain").innerHTML=this.guesses;
+		document.getElementById("wins").innerHTML = "Wins: ";
 		//console.log("Game Started");
 	},
 	initGame: function () {
-		var i=Math.floor(Math.floor(Math.random() * gameWordList.length));
-		this.word=gameWordList[i];
-		gameWordList.splice(i, 1);
+		var i=Math.floor(Math.floor(Math.random() * this.gameWordList.length));
+		this.word=this.gameWordList[i];
+		this.gameWordList.splice(i, 1);
 		this.guesses=13;
 		//guesser.initAlpha();
 		guesser.initWord();
-		document.getElementById("currentWord").innerHTML = guesser.word;
+		document.getElementById("currentWord").innerHTML = guesser.word.join(" ");
 		document.getElementById("guesRemain").innerHTML=this.guesses;
 		//console.log("Game Started");
 	},
@@ -58,21 +65,22 @@ var comp={
 //returns true if the letter was chosen and false if not
 function alreadyChosen(letter){
 	//search the current word for matching letters
-	console.log("in alreadyChosen function");
+	//console.log("in alreadyChosen function");
 	//if the user hasnt chosen any letters,
 	// add letter to .guesser.alpha return false
 	if (guesser.alpha.length===0) {
 		guesser.alpha[0]=letter.toLowerCase();
+		console.log(guesser.alpha);
 		return false;
 	}
 	//otherwise go through guesser.alpha and see if there is a matching letter.
 	//if matching letter return true otherwise false
 	else{
-		console.log("going into loop");
+		//console.log("going into loop");
 		for (var i = 0; i < guesser.alpha.length; i++) {
 
 			if (guesser.alpha[i].toLowerCase()===letter.toLowerCase()){
-				console.log("returning true");
+				//console.log("returning true");
 				return true;
 
 			}
@@ -84,12 +92,13 @@ function alreadyChosen(letter){
 	
 	return false;
 }
+
 function isalpha(letter){
 	//goes through the alphabet and makes sure that the user's unput is a letter
 	for (var i = 0; i < comp.alpha.length; i++) {
 
-		if (guesser.alpha[i].toLowerCase()===letter.toLowerCase()){
-			console.log("returning true");
+		if (comp.alpha[i].toLowerCase()===letter.toLowerCase()){
+			//console.log("returning true");
 			return true;
 		}
 	}
@@ -99,16 +108,28 @@ function isalpha(letter){
 function inCompWord(letter){
 	//see if the letter is in the word-
 	//if it is add letter to the user's word to display on the screen
-	boolean inWord=false;
+	var inWord=false;
 	for (var i = 0; i < comp.word.length; i++) {
 		//the guesser's letter is in the computer's word
-		//add letter to the user's word to display on the screen
+		//add letter to the user's word to be later display on the screen
 		if(comp.word[i].toLowerCase()===letter.toLowerCase()){
-			guesser.word[i]=comp.word[i];
+			if(i===0){
+				guesser.word[i]=letter.toUpperCase();
+				console.log("found first letter: " +guesser.word.join(""));
+			}
+			else{
+				guesser.word[i]=letter.toLowerCase();
+				console.log("found letter: " +guesser.word.join(""));
+			}
+			inWord=true;
+			
 		}
 	}
-
-	return false;
+	if(!inWord)
+	{
+		console.log("letter not found");
+	}
+	return inWord;
 }
 /*
 	id's:
@@ -121,7 +142,7 @@ function inCompWord(letter){
 document.onkeyup = function(event){
 		//if there is no word selected 
 		//assume that this is the first time at the site and start a new game
-		if (comp.word==="") {
+		if (comp.word===""||(comp.gameWordList.length===0)) {
 			comp.initGameAll();
 		}
 		//the guesser chooses a letter
@@ -133,20 +154,45 @@ document.onkeyup = function(event){
 			//this function also adds the letter to the pool of guessed letters
 			if(!alreadyChosen(letChoice))
 			{
-				//see if the letter is in the word- if it is do not take away from guesses
+				//see if the letter is in the word-
+				//adds letter to guesser's word
 				if(inCompWord(letChoice))
 				{
+					console.log(guesser.word+" vs "+comp.word);
 					//if the guesser has compleated the word 
-						//++wins display wins 
+					if(guesser.word.join("")===comp.word)
+					{
+						console.log("winner");
+						//++wins display wins
+						guesser.wins++; 
+						document.getElementById("wins").innerHTML = "Wins: "+ wins;
 						//start new game
+						comp.initGame();
+					}
+						
 				}
-				//or a-take away from guesses
+				// take away from guesses
+				else{
+					comp.guesses--;
+				}
 	
 			}
+			//otherwise do nothing 
+			//dont add the letter to the list no guesses taken away
+
+			//display all stats except wins
+			document.getElementById("letterGuessed").innerHTML = guesser.alpha;
+			document.getElementById("currentWord").innerHTML = guesser.word.join(" ");
+			document.getElementById("guesRemain").innerHTML = comp.guesses;
 		}
-		//otherwise do nothing 
-		//dont add the letter to the list no guesses taken away
-		
+			
+		/*
+			id's:
+			letterGuessed,
+			wins,
+			currentWord,
+			guesRemain,
+		*/
 
 		/*
 		document.getElementById("wins").innerHTML = "Wins: "+ win;
