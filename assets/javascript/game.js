@@ -140,10 +140,10 @@ function inCompWord(letter){
 			
 		}
 	}
-	if(!inWord)
+/*	if(!inWord)
 	{
 		//console.log("letter not found");
-	}
+	}*/
 	return inWord;
 }
 /*
@@ -189,6 +189,11 @@ document.onkeyup = function(event){
 				// take away from guesses
 				else{
 					comp.guesses--;
+				}
+				if(comp.guesses===0)
+				{
+					//document.getElementById("letterGuessed").innerHTML = comp.word;
+					comp.initGame();
 				}
 	
 			}
