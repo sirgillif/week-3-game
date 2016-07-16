@@ -14,7 +14,7 @@ var guesser={
 		initAlpha: function(){
 			for (var i = 0; i < 26; i++) {
 				this.alpha[i]=0;
-				console.log(this.alpha);
+				//console.log(this.alpha);
 			}
 	},*/
 	initWord:function(){
@@ -25,7 +25,7 @@ var guesser={
 		}
 		this.alpha=[];
 		//tmpWord=this.word.join(" ");
-		//console.log("guesser word length "+ this.word.length+"the word"+tmpWord);
+		////console.log("guesser word length "+ this.word.length+"the word"+tmpWord);
 		//document.getElementById("currentWord").innerHTML = tmpWord;
 	},
 }
@@ -45,7 +45,7 @@ var comp={
 		document.getElementById("currentWord").innerHTML = guesser.word.join(" ");
 		document.getElementById("guesRemain").innerHTML=this.guesses;
 		document.getElementById("wins").innerHTML = "Wins: ";
-		//console.log("Game Started");
+		////console.log("Game Started");
 	},
 	initGame: function () {
 		var i=Math.floor(Math.floor(Math.random() * this.gameWordList.length));
@@ -56,7 +56,7 @@ var comp={
 		guesser.initWord();
 		document.getElementById("currentWord").innerHTML = guesser.word.join(" ");
 		document.getElementById("guesRemain").innerHTML=this.guesses;
-		//console.log("Game Started");
+		////console.log("Game Started");
 	},
 }
 
@@ -65,32 +65,47 @@ var comp={
 //returns true if the letter was chosen and false if not
 function alreadyChosen(letter){
 	//search the current word for matching letters
-	//console.log("in alreadyChosen function");
+	////console.log("in alreadyChosen function");
 	//if the user hasnt chosen any letters,
 	// add letter to .guesser.alpha return false
 	if (guesser.alpha.length===0) {
+		for (var i = 0; i < comp.word.length; i++) {
+			if(comp.word[i].toLowerCase()===letter.toLowerCase())
+			{
+				return false;
+			}
+		}
 		guesser.alpha[0]=letter.toLowerCase();
-		console.log(guesser.alpha);
+		//console.log(guesser.alpha);
 		return false;
 	}
 	//otherwise go through guesser.alpha and see if there is a matching letter.
 	//if matching letter return true otherwise false
 	else{
-		//console.log("going into loop");
+		////console.log("going into loop");
+
 		for (var i = 0; i < guesser.alpha.length; i++) {
 
 			if (guesser.alpha[i].toLowerCase()===letter.toLowerCase()){
-				//console.log("returning true");
+				////console.log("returning true");
 				return true;
 
 			}
 		}
+		////console.log("going into loop");
+		for (var i = 0; i < comp.word.length; i++) {
+			if(comp.word[i].toLowerCase()===letter.toLowerCase())
+			{
+				////console.log("letter found returning false");
+				return false;
+			}
+		}
 		guesser.alpha[guesser.alpha.length]=letter.toLowerCase();
-		//console.log(guesser.alpha);
+		////console.log(guesser.alpha);
 		return false;
 	}
 	
-	return false;
+
 }
 
 function isalpha(letter){
@@ -98,7 +113,7 @@ function isalpha(letter){
 	for (var i = 0; i < comp.alpha.length; i++) {
 
 		if (comp.alpha[i].toLowerCase()===letter.toLowerCase()){
-			//console.log("returning true");
+			////console.log("returning true");
 			return true;
 		}
 	}
@@ -115,11 +130,11 @@ function inCompWord(letter){
 		if(comp.word[i].toLowerCase()===letter.toLowerCase()){
 			if(i===0){
 				guesser.word[i]=letter.toUpperCase();
-				console.log("found first letter: " +guesser.word.join(""));
+				//console.log("found first letter: " +guesser.word.join(""));
 			}
 			else{
 				guesser.word[i]=letter.toLowerCase();
-				console.log("found letter: " +guesser.word.join(""));
+				//console.log("found letter: " +guesser.word.join(""));
 			}
 			inWord=true;
 			
@@ -127,7 +142,7 @@ function inCompWord(letter){
 	}
 	if(!inWord)
 	{
-		console.log("letter not found");
+		//console.log("letter not found");
 	}
 	return inWord;
 }
@@ -146,7 +161,7 @@ document.onkeyup = function(event){
 			comp.initGameAll();
 		}
 		//the guesser chooses a letter
-		//console.log("letter pressed")
+		////console.log("letter pressed")
 		var letChoice = String.fromCharCode(event.keyCode).toLowerCase();
 		//make sure is a letter
 		if(isalpha(letChoice)){
@@ -158,14 +173,14 @@ document.onkeyup = function(event){
 				//adds letter to guesser's word
 				if(inCompWord(letChoice))
 				{
-					console.log(guesser.word+" vs "+comp.word);
+					//console.log(guesser.word+" vs "+comp.word);
 					//if the guesser has compleated the word 
 					if(guesser.word.join("")===comp.word)
 					{
-						console.log("winner");
+						//console.log("winner");
 						//++wins display wins
 						guesser.wins++; 
-						document.getElementById("wins").innerHTML = "Wins: "+ wins;
+						document.getElementById("wins").innerHTML = "Wins: "+ guesser.wins;
 						//start new game
 						comp.initGame();
 					}
@@ -198,7 +213,7 @@ document.onkeyup = function(event){
 		document.getElementById("wins").innerHTML = "Wins: "+ win;
 		document.getElementById("losses").innerHTML = "Losses: "+loss;
 		document.getElementById("ties").innerHTML = "Ties: "+tie;
-					console.log("wins "+win);
-		console.log("tie " +tie);
-		console.log("loss "+loss);*/
+					//console.log("wins "+win);
+		//console.log("tie " +tie);
+		//console.log("loss "+loss);*/
 }
